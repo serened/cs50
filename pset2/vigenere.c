@@ -34,7 +34,9 @@ int main(int argc, char* argv[])
                 return 1;
             }
             else
+            {
                 code = argv[1];             
+            }
         }
         
         //get the message to encipher 
@@ -48,14 +50,21 @@ int main(int argc, char* argv[])
             {
                 char enciphered[i];
                 if (isupper(p[i])) 
+                {
                     enciphered[i] = (p[i] - 'A' + (code[j] - 'A')) % 26 + 'A';
-		        else if (islower(p[i])) 
-		            enciphered[i] = (p[i] - 'a' + (code[j] - 'a')) % 26 + 'a';
-		        else
-		            enciphered[i] = p[i];
-		        printf("%c", enciphered[i]);
+                    j++;
+                }
+                else if (islower(p[i])) 
+                {
+                    enciphered[i] = (p[i] - 'a' + (code[j] - 'a')) % 26 + 'a';
+                    j++;
+                }
+                else
+                {
+                    enciphered[i] = p[i];
+                }
+                printf("%c", enciphered[i]);
             }
-            printf("\n");
         }
     }
 }
