@@ -20,51 +20,50 @@ int main(int argc, char* argv[])
         printf("Wrong! Try again\n");
         return 1;
     }
-    else
-    {   
-        char* k = argv[1];
-        char* code;
-        
-        //testing arg[1] to make sure key is alphabetical
-        for (int j = 0, n = strlen(k); j < n; j++)
+    
+    char* k = argv[1];
+    int size = strlen(k);
+    int key_cipher[size];
+    
+    // testing arg[1] to make sure key is alphabetical
+    for (int j = 0; j < size; j++)
+    {
+        if (!isalpha(k[j]))
         {
-            if (!isalpha(k[j]))
+            printf("You can only use letters.\n");
+            return 1;
+        }
+        else
+        {
+            key_cipher[j] = (tolower(k[j]) - 'a');            
+        }
+    }
+
+    string p = GetString();
+    
+    if (p != NULL)
+    {
+        for (int i = 0, j= 0, n = strlen(p); i < n; i++)
+        {
+            char enciphered;
+            if (isupper(p[i])) 
             {
-                printf("You can only use letters.\n");
-                return 1;
+                enciphered = (p[i] - 'A' + key_cipher[j]) % 26 + 'A';
+                j++;
+            }
+            else if (islower(p[i])) 
+            {
+                enciphered = (p[i] - 'a' + key_cipher[j]) % 26 + 'a';
+                j++;
             }
             else
             {
-                code = argv[1];             
+                enciphered = p[i];
             }
+            j = j % size;
+            printf("%c", enciphered);
         }
-        
-        //get the message to encipher 
-        //printf("Ciphertext: ");
-        string p = GetString();
-        
-        if (p != NULL)
-        {
-            //printf("Plaintext: ");
-            for (int i = 0, j = 0, n = strlen(p); i < n; i++)
-            {
-                char enciphered[i];
-                if (isupper(p[i])) 
-                {
-                    enciphered[i] = (p[i] - 'A' + (code[j] - 'A')) % 26 + 'A';
-                    j++;
-                }
-                else if (islower(p[i])) 
-                {
-                    enciphered[i] = (p[i] - 'a' + (code[j] - 'a')) % 26 + 'a';
-                    j++;
-                }
-                else
-                {
-                    enciphered[i] = p[i];
-                }
-                printf("%c", enciphered[i]);
-            }
-        }
+        printf("\n");
     }
+    return 0;
 }
